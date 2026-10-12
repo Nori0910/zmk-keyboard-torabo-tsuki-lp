@@ -1,11 +1,12 @@
 // Auto mouse for torabo-tsuki LP: motion activates layer 4 for 10 seconds.
 // Keep the stock X/Y inversion for the trackball on either central side.
 // Layer 5 is the hold-to-scroll helper layer.
+// M Layout (52 keys) uses physical positions without the L number row.
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
-    excluded-positions = <21 22 23 34 35 36 37 49 50 51>;
+    excluded-positions = <9 10 11 22 23 24 25 37 38 39>;
 };
 
 &pointing_listener {
@@ -23,6 +24,7 @@
         layers = <5>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                            <&zip_temp_layer 4 10000>,
-                           <&zip_xy_to_scroll_mapper>;
+                           <&zip_xy_to_scroll_mapper>,
+                           <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>;
     };
 };
