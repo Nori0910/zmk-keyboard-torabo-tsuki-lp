@@ -1,12 +1,12 @@
 // Auto mouse for torabo-tsuki LP: motion activates layer 4 for 10 seconds.
 // Keep the stock X/Y inversion for the trackball on either central side.
-// Layer 5 is the hold-to-scroll helper layer.
+// Layer 5 is vertical scroll; layer 6 is horizontal scroll.
 // M Layout (52 keys) uses physical positions without the L number row.
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
-    excluded-positions = <9 10 11 20 21 22 23 35 36 37>;
+    excluded-positions = <9 10 11 20 21 22 23 34 35 36 37>;
 };
 
 &pointing_listener {
@@ -18,12 +18,24 @@
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                        <&zip_temp_layer 4 10000>;
 
-    // A layer-specific override replaces the base processors, so retain
-    // the stock X/Y inversion while translating motion into scroll events.
-    scroll_while_held {
+    // The scroll overrides replace the default pointer processing.
+    // A 0/1 axis scaler suppresses the unwanted axis before conversion.
+    // Layer 5: vertical wheel only; horizontal movement is ignored.
+    vertical_scroll_while_held {
         layers = <5>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                            <&zip_temp_layer 4 10000>,
+                           <&zip_x_scaler 0 1>,
+                           <&zip_xy_to_scroll_mapper>,
+                           <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>;
+    };
+
+    // Layer 6: horizontal wheel only; vertical movement is ignored.
+    horizontal_scroll_while_held {
+        layers = <6>;
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                           <&zip_temp_layer 4 10000>,
+                           <&zip_y_scaler 0 1>,
                            <&zip_xy_to_scroll_mapper>,
                            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>;
     };
