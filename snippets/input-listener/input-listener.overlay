@@ -1,4 +1,23 @@
+// Auto mouse: ball movement activates layer 4 for 10 seconds.
+// The ten assigned keys remain on layer 4 when pressed;
+// any other key position exits layer 4 and is handled by lower layers.
+// Layer 5 is used only while holding the scroll key (position 36).
+#include <input/processors.dtsi>
+
+&zip_temp_layer {
+    excluded-positions = <21 22 23 34 35 36 37 49 50 51>;
+};
+
 &pointing_listener {
     status = "okay";
     device = <&pointing_device>;
+
+    input-processors = <&zip_temp_layer 4 10000>;
+
+    // Scroll mode should renew the auto mouse timer while ball is moving.
+    // Run temp-layer before mapping XY motion to wheel events.
+    scroll_while_held {
+        layers = <5>;
+        input-processors = <&zip_temp_layer 4 10000>, <&zip_xy_to_scroll_mapper>;
+    };
 };
