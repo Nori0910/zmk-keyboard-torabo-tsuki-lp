@@ -1,8 +1,8 @@
-// Auto mouse: ball movement activates layer 4 for 10 seconds.
-// The ten assigned keys remain on layer 4 when pressed;
-// any other key position exits layer 4 and is handled by lower layers.
-// Layer 5 is used only while holding the scroll key (position 36).
+// Auto mouse for torabo-tsuki LP: motion activates layer 4 for 10 seconds.
+// Keep the stock X/Y inversion for the trackball on either central side.
+// Layer 5 is the hold-to-scroll helper layer.
 #include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
 
 &zip_temp_layer {
     excluded-positions = <21 22 23 34 35 36 37 49 50 51>;
@@ -12,12 +12,17 @@
     status = "okay";
     device = <&pointing_device>;
 
-    input-processors = <&zip_temp_layer 4 10000>;
+    // The snippet must include the board's original X/Y inversion here,
+    // because assigning input-processors replaces the previous list.
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                       <&zip_temp_layer 4 10000>;
 
-    // Scroll mode should renew the auto mouse timer while ball is moving.
-    // Run temp-layer before mapping XY motion to wheel events.
+    // A layer-specific override replaces the base processors, so retain
+    // the stock X/Y inversion while translating motion into scroll events.
     scroll_while_held {
         layers = <5>;
-        input-processors = <&zip_temp_layer 4 10000>, <&zip_xy_to_scroll_mapper>;
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                           <&zip_temp_layer 4 10000>,
+                           <&zip_xy_to_scroll_mapper>;
     };
 };
