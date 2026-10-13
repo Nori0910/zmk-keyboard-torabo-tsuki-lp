@@ -15,13 +15,16 @@
 
     // The snippet must include the board's original X/Y inversion here,
     // because assigning input-processors replaces the previous list.
+    // Pointer movement only: 15/16 (93.75%), closest safe ratio to 95%.
+    // Place after zip_temp_layer so auto-mouse activation still sees raw motion.
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
-                       <&zip_temp_layer 4 10000>;
+                       <&zip_temp_layer 4 10000>,
+                       <&zip_xy_scaler 15 16>;
 
     // The scroll overrides replace the default pointer processing.
     // A 0/1 axis scaler suppresses the unwanted axis before conversion.
     // Layer 5: vertical wheel only; horizontal movement is ignored.
-    // Scale only wheel events to 25%; cursor movement remains unchanged.
+    // Scale only wheel events to 12.5%; cursor movement remains unchanged.
     vertical_scroll_while_held {
         layers = <5>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
@@ -29,11 +32,11 @@
                            <&zip_x_scaler 0 1>,
                            <&zip_xy_to_scroll_mapper>,
                            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
-                           <&zip_scroll_scaler 1 4>;
+                           <&zip_scroll_scaler 1 8>;
     };
 
     // Layer 6: horizontal wheel only; vertical movement is ignored.
-    // Scale only wheel events to 25%; cursor movement remains unchanged.
+    // Scale only wheel events to 12.5%; cursor movement remains unchanged.
     horizontal_scroll_while_held {
         layers = <6>;
         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
@@ -41,6 +44,6 @@
                            <&zip_y_scaler 0 1>,
                            <&zip_xy_to_scroll_mapper>,
                            <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>,
-                           <&zip_scroll_scaler 1 4>;
+                           <&zip_scroll_scaler 1 8>;
     };
 };
