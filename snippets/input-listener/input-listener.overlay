@@ -7,7 +7,7 @@
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 
 // Cursor-only scaler: preserve fractional X/Y movement across events.
-// Keeps 39/50 (78%) scaling without discarding small individual deltas.
+// Keeps 77/100 (77%) scaling without discarding small individual deltas.
 / {
     input_processors {
         smooth_cursor_scaler: smooth_cursor_scaler {
@@ -36,11 +36,11 @@
 
     // The snippet must include the board's original X/Y inversion here,
     // because assigning input-processors replaces the previous list.
-    // Pointer movement only: 39/50 (78.00%).
+    // Pointer movement only: 77/100 (77.00%).
     // Place after zip_temp_layer so auto-mouse activation still sees raw motion.
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                        <&zip_temp_layer 4 10000>,
-                       <&smooth_cursor_scaler 39 50>;
+                       <&smooth_cursor_scaler 77 100>;
 
     // The scroll overrides replace the default pointer processing.
     // A 0/1 axis scaler suppresses the unwanted axis before conversion.
