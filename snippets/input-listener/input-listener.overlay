@@ -40,7 +40,7 @@
     // Place after zip_temp_layer so auto-mouse activation still sees raw motion.
     input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
                        <&zip_temp_layer 4 10000>,
-                       <&smooth_cursor_scaler 100 100>;
+                       <&smooth_cursor_scaler 13 9>;
 
     // The scroll overrides replace the default pointer processing.
     // A 0/1 axis scaler suppresses the unwanted axis before conversion.
