@@ -94,7 +94,7 @@
             &none  &none  &none  &none  &none  &none  &none  &none  &none  &mkp MCLK  &none  &kp RET
             &none  &none  &none  &none  &none  &none  &none  &none  &none  &kp LC(LA(S))  &mkp LCLK  &mo 5  &mkp RCLK  &mkp MB4
             &kp LSHFT  &none  &none  &none  &none  &none  &none  &none  &none  &none  &mo 6  &kp LG(LS(LEFT))  &kp LG(LS(RIGHT))  &kp LG(TAB)
-            &kp LCTRL  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
+            &kp LCTRL  &none  &none  &none  &lt 3 LCTRL  &none  &none  &none  &none  &none  &none  &none  &none  &none
 #if defined(TORABO_TSUKI_LP_KSCAN_4_DIRECTION_SWITCH)
 &trans &trans &trans &trans &trans
 #elif defined(TORABO_TSUKI_LP_INPUT_HIRES_DIAL)
